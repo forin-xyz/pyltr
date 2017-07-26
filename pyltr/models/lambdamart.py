@@ -196,7 +196,10 @@ class LambdaMART(AdditiveModel):
                 self.oob_improvement_.resize(self.n_estimators)
             y_pred = self.predict(X)
 
-        n_stages = self._fit_stages(X, y, qids, y_pred,
+        if begin_at_stage == self.n_estimators:
+            n_stages = begin_at_stage
+        else:
+            n_stages = self._fit_stages(X, y, qids, y_pred,
                                     random_state, begin_at_stage, monitor)
 
         if n_stages < self.estimators_.shape[0]:
